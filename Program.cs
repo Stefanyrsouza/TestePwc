@@ -1,4 +1,6 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
+using System.Globalization;
 using System.Linq.Expressions;
 
 int opcao;
@@ -8,7 +10,7 @@ Console.WriteLine("Escolha uma opção.");
 Console.WriteLine("1 - Reverta a ordem das palavras nas frases, mantendo a ordem das palavras.");
 Console.WriteLine("2 - Remova todos os caracteres duplicados da string abaixo.");
 Console.WriteLine("3 - Encontre a substring palindroma mais longa na string abaixo.");
-Console.WriteLine("4 - Coloque em maiúcula a primeira letra de cada frase de string.");
+Console.WriteLine("4 - Coloque em maiúcula a primeira letra de cada frase na string.");
 Console.WriteLine("5 - Verifique se a string é um anagrama de um palindromo.");
 
 
@@ -30,6 +32,7 @@ switch (opcao)
         break;
 
         case 4:
+        colocarMaiusculo();
         break;
 
         case 5:
@@ -159,3 +162,41 @@ void verifarAnagramaPolindromo()
     }
        Console.ReadKey();
 }
+void colocarMaiusculo()
+{
+    string frase;
+    Console.WriteLine("Digite uma frase:");
+    frase = Console.ReadLine();
+
+    string output = maiusculoPrimeiraLetra(frase);
+
+    Console.WriteLine(output);
+}
+
+    static string maiusculoPrimeiraLetra(string input)
+    {
+        char[] caracterFrase = input.ToCharArray();
+
+        // Define os delimitadores de frase
+        char[] delimitadorFrase = { '.', '?', '!' };
+
+        caracterFrase[0] = char.ToUpper(caracterFrase[0]);
+
+    // Percorre o array de caracteres
+    for (int i = 0; i < caracterFrase.Length; i++)
+    {
+        // Verifica se o caractere atual é um delimitador de frase
+        if (Array.IndexOf(delimitadorFrase, caracterFrase[i]) != -1 && i< (caracterFrase.Length-1))
+        {
+           
+            caracterFrase[i + 2] = char.ToUpper(caracterFrase[i + 2]);
+           
+        }
+
+        
+    }
+    // Retorna a string modificada
+    return new string(caracterFrase);
+    }
+
+
