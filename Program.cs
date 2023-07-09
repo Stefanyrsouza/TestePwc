@@ -1,4 +1,5 @@
-﻿using System.Linq.Expressions;
+﻿using System.Diagnostics;
+using System.Linq.Expressions;
 
 int opcao;
 
@@ -20,13 +21,25 @@ switch (opcao)
         reverterOrdem();
         break;
 
-        case 2:
+    case 2:
         removerDuplicados();
         break;
+
+    case 3:
+        maiorPolindromo();
+        break;
+
+        case 4:
+        break;
+
+        case 5:
+        verifarAnagramaPolindromo();
+        break;  
 }
 
 void reverterOrdem()
 {
+    Console.Clear();
     string frase;
     string fraseInvertida;
     
@@ -37,4 +50,112 @@ void reverterOrdem()
     fraseInvertida = string.Join(" ", palavras.Reverse());
 
     Console.WriteLine($"Frase Convertida: {fraseInvertida}");
+}
+
+void removerDuplicados()
+{
+    Console.Clear();
+    string frase;
+    string fraseRemovida;
+
+    Console.WriteLine("Digite uma frase:");
+    frase = Console.ReadLine();
+    fraseRemovida = removerCaracteresDuplicados(frase);
+    Console.WriteLine($"Frase Convertida: {fraseRemovida}");
+}
+
+static string removerCaracteresDuplicados(string texto)
+{
+    // Armazena as letras 
+    string letras = "";
+    // armazena o resultado
+    string resultado = "";
+    // Percorre cada caractere do texto
+    foreach (char valor in texto)
+    {
+        // Verifica se o caractere esta na tabela
+        if (letras.IndexOf(valor) == -1)
+        {
+            // anexa as letras na tabela e no resultado
+            letras += valor;
+            resultado += valor;
+        }
+    }
+    return resultado;
+}
+
+void maiorPolindromo()
+{
+    Console.Clear();
+    string palavra;
+    
+    Console.WriteLine("Digite uma palavra:");
+    palavra = Console.ReadLine();
+
+    string maiorPolindromo = verificarMaiorPolindromo(palavra);
+    Console.WriteLine("A substring palíndroma mais longa é: " + maiorPolindromo);
+}
+
+static string verificarMaiorPolindromo(string str)
+{
+    int maiorTamanho = 1;
+    int inicio = 0;
+    int tamanhoString = str.Length;
+
+    int menor, maior;
+
+    // Percorre a string e verifica cada caractere como centro da substring palíndroma
+    for (int i = 1; i < tamanhoString; ++i)
+    {
+    // Encontra a substring palíndroma de tamanho ímpar
+        menor = i - 1;
+        maior = i + 1;
+        while (menor >= 0 && maior < tamanhoString && str[menor] == str[maior])
+        {
+            if (maior - menor + 1 > maiorTamanho)
+            {
+                inicio = menor;
+                maiorTamanho = maior - menor + 1;
+            }
+            --menor;
+            ++maior;
+        }
+
+        // Encontra a substring palíndroma de tamanho par
+        menor = i - 1;
+        maior = i;
+        while (menor >= 0 && maior < tamanhoString && str[menor] == str[maior])
+        {
+            if (maior - menor + 1 > maiorTamanho)
+            {
+                inicio = menor;
+                maiorTamanho = maior - menor + 1;
+            }
+            --menor;
+            ++maior;
+        }
+    }
+
+    return str.Substring(inicio, maiorTamanho);
+}
+void verifarAnagramaPolindromo()
+{
+    Console.Clear();
+    string palavra, anagrama = "";
+    Console.WriteLine("Digite a palavra: ");
+    palavra = Console.ReadLine();
+
+    for (int i = palavra.Length - 1; i >= 0; i--) //Palara invertida 
+    {
+        anagrama += palavra[i].ToString();
+    }
+    if (anagrama == palavra) // Validando se a string é um polindromo ou não.  
+    {
+        Console.WriteLine("True.");
+    }
+    else
+    {
+        Console.WriteLine("False.");
+    }
+       Console.ReadKey();
 }
