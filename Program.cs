@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq.Expressions;
-
+ 
 int opcao;
 
 Console.WriteLine("Escolha uma opção.");
@@ -164,6 +164,7 @@ void verifarAnagramaPolindromo()
 }
 void colocarMaiusculo()
 {
+    Console.Clear();
     string frase;
     Console.WriteLine("Digite uma frase:");
     frase = Console.ReadLine();
